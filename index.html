@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EFL Reading & Pronunciation Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f9; /* Light background */
+        }
+        #reading-text {
+            font-family: 'Lora', serif;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #333;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            min-height: 150px;
+        }
+        #reading-text .word {
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            padding: 0.1em 0.05em;
+            margin: 0 0.05em;
+            border-radius: 3px;
+        }
+        #reading-text .word:hover {
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        #reading-text .highlight {
+            background-color: #fdba74;
+            color: #7c2d12;
+            font-weight: 600;
+        }
+        #translation-box, #recognition-output {
+            min-height: 50px;
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 1rem;
+            color: #1e293b;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        #recognition-output {
+            background-color: #eef2ff; /* Lighter background for output */
+            color: #3730a3;
+        }
+        .control-button {
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        .control-button:active {
+            transform: scale(0.95);
+        }
+        .control-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        #voice-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.375rem;
+            background-color: white;
+            color: #374151;
+            cursor: pointer;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        #voice-select:disabled {
+             opacity: 0.5;
+             cursor: not-allowed;
+             background-color: #f3f4f6;
+        }
+        #book-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        #record-button.recording {
+            background-color: #ef4444;
+            color: white;
+        }
+         #record-button.recording:hover {
+             background-color: #dc2626;
+         }
+    </style>
+</head>
+<body class="p-6 md:p-10">
+
+    <div class="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">EFL Reading Practice</h1>
+
+        <div class="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4 mb-6">
+            <div class="flex space-x-4">
+                <button id="play-button" title="Read Aloud" class="control-button bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow">
+                    <i class="fas fa-play"></i> <span class="hidden sm:inline">Play</span>
+                </button>
+                <button id="pause-button" title="Pause Reading" class="control-button bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full shadow" disabled>
+                    <i class="fas fa-pause"></i> <span class="hidden sm:inline">Pause</span>
+                </button>
+                <button id="stop-button" title="Stop Reading" class="control-button bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full shadow" disabled>
+                    <i class="fas fa-stop"></i> <span class="hidden sm:inline">Stop</span>
+                </button>
+            </div>
+             <div class="flex items-center space-x-2">
+                 <label for="voice-select" class="text-sm font-medium text-gray-700"><i class="fas fa-headphones-alt mr-1"></i>Voice:</label>
+                 <select id="voice-select" name="voice" disabled>
+                     <option value="">Loading voices...</option>
+                 </select>
+            </div>
+             <button id="next-book-button" title="Next Book" class="control-button bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow">
+                <i class="fas fa-book-open"></i> <span class="hidden sm:inline">Next Book</span>
+            </button>
+             <button id="record-button" title="Start Listening" class="control-button bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-full shadow">
+                <i class="fas fa-microphone"></i> <span class="hidden sm:inline" id="record-button-text">Listen</span>
+            </button>
+        </div>
+
+        <h2 id="book-title" class="text-xl">Book Title Here</h2>
+
+        <div id="reading-text-container">
+            <p id="reading-text"></p>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-2">What I Heard You Say</h2>
+            <div id="recognition-output">
+                Click the 'Listen' button and read the text aloud. Your transcribed speech will appear here.
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-2">Translation (German)</h2>
+            <div id="translation-box">
+                Click on a word in the text above to see its German translation here.
+            </div>
+        </div>
+
+        <div id="speech-status" class="mt-4 text-center text-sm text-gray-500"></div>
+    </div>
+
+    <script>
+        // --- Configuration & Elements ---
+        const readingTextElement = document.getElementById('reading-text');
+        const translationBox = document.getElementById('translation-box');
+        const playButton = document.getElementById('play-button');
+        const pauseButton = document.getElementById('pause-button');
+        const stopButton = document.getElementById('stop-button');
+        const voiceSelect = document.getElementById('voice-select');
+        const speechStatus = document.getElementById('speech-status');
+        const nextBookButton = document.getElementById('next-book-button');
+        const bookTitleElement = document.getElementById('book-title');
+        const recordButton = document.getElementById('record-button');
+        const recordButtonText = document.getElementById('record-button-text');
+        const recognitionOutput = document.getElementById('recognition-output');
+
+        // --- Book Data ---
+        const books = [
+             { title: "Language Learning", text: "Learning a new language can be challenging, but also very rewarding. Regular practice is important for improvement. This tool helps you practice reading and pronunciation. Click any word to see its translation.", dictionary: { "learning": "Lernen", "a": "ein/eine", "new": "neu", "language": "Sprache", "can": "kann", "be": "sein", "challenging": "herausfordernd", "but": "aber", "also": "auch", "very": "sehr", "rewarding": "lohnend", "regular": "regelmäßig", "practice": "Übung", "is": "ist", "important": "wichtig", "for": "für", "improvement": "Verbesserung", "this": "dieses", "tool": "Werkzeug", "helps": "hilft", "you": "dir/Ihnen", "reading": "Lesen", "and": "und", "pronunciation": "Aussprache", "click": "klicke/klicken Sie", "any": "jedes", "word": "Wort", "to": "um/zu", "see": "sehen", "its": "seine/ihre", "translation": "Übersetzung" } },
+             { title: "The Friendly Animals", text: "The quick brown fox jumps over the lazy dog. A small cat sat on the mat. Birds sing in the tall green trees.", dictionary: { "the": "der/die/das", "quick": "schnell", "brown": "braun", "fox": "Fuchs", "jumps": "springt", "over": "über", "lazy": "faul", "dog": "Hund", "a": "ein/eine", "small": "klein", "cat": "Katze", "sat": "saß", "on": "auf", "mat": "Matte", "birds": "Vögel", "sing": "singen", "in": "in", "tall": "hoch", "green": "grün", "trees": "Bäume" } },
+             { title: "Simple Sentences", text: "I like apples. She reads a book. He runs fast. We play games. They eat lunch.", dictionary: { "i": "ich", "like": "mag", "apples": "Äpfel", "she": "sie", "reads": "liest", "a": "ein", "book": "Buch", "he": "er", "runs": "rennt", "fast": "schnell", "we": "wir", "play": "spielen", "games": "Spiele", "they": "sie", "eat": "essen", "lunch": "Mittagessen" } }
+        ];
+
+        let currentBookIndex = 0;
+        let currentDictionary = {};
+        let currentUtterance = null;
+        let wordSpans = [];
+        let availableVoices = [];
+        let recognition = null;
+        let isRecording = false;
+
+        // --- Initialize Text ---
+        function initializeText(bookIndex) {
+            if (speechSynthesis.speaking || speechSynthesis.paused) {
+                speechSynthesis.cancel();
+            }
+             if (isRecording && recognition) {
+                 recognition.abort(); // Use abort() for immediate stop if needed
+                 console.log("Recognition aborted due to text change.");
+             }
+
+            const book = books[bookIndex];
+            currentDictionary = book.dictionary;
+            bookTitleElement.textContent = book.title;
+            readingTextElement.innerHTML = '';
+            wordSpans = [];
+            translationBox.textContent = 'Click on a word in the text above to see its German translation here.';
+            recognitionOutput.textContent = 'Click the \'Listen\' button and read the text aloud. Your transcribed speech will appear here.';
+
+            const wordsAndDelimiters = book.text.split(/([,.\s])/).filter(Boolean);
+            wordsAndDelimiters.forEach(item => {
+                if (item.match(/^[,\.\s]$/)) {
+                    readingTextElement.appendChild(document.createTextNode(item));
+                } else if (item) {
+                    const span = document.createElement('span');
+                    span.textContent = item;
+                    span.className = 'word';
+                    span.dataset.lookup = item.toLowerCase().replace(/[.,]$/, '');
+                    span.addEventListener('click', handleWordClick);
+                    readingTextElement.appendChild(span);
+                    wordSpans.push(span);
+                }
+            });
+
+             // Reset button states reliably
+             playButton.disabled = false;
+             pauseButton.disabled = true;
+             stopButton.disabled = true;
+             recordButton.disabled = !recognition; // Disable if recognition not supported
+             voiceSelect.disabled = (availableVoices.length === 0);
+             nextBookButton.disabled = false;
+             isRecording = false; // Ensure recording state is reset
+             recordButton.classList.remove('recording');
+             recordButtonText.textContent = 'Listen';
+             speechStatus.textContent = "Select a voice and press play, or press Listen to record.";
+        }
+
+        // --- Populate Voice List ---
+        function populateVoiceList() {
+             availableVoices = speechSynthesis.getVoices();
+             const previouslySelected = voiceSelect.value;
+             voiceSelect.innerHTML = '';
+
+            if (availableVoices.length === 0) {
+                voiceSelect.innerHTML = '<option value="">No voices available</option>';
+                voiceSelect.disabled = true;
+                return;
+            }
+            availableVoices.sort((a, b) => a.name.localeCompare(b.name)); // Sort voices alphabetically
+
+            let foundEnglishVoice = false;
+            availableVoices.forEach(voice => {
+                if (voice.lang.startsWith('en')) {
+                    const option = document.createElement('option');
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    option.value = voice.name; // Use name as value
+                    voiceSelect.appendChild(option);
+                    foundEnglishVoice = true;
+                }
+            });
+
+             if (foundEnglishVoice && availableVoices.some(v => !v.lang.startsWith('en'))) {
+                 const separator = document.createElement('option');
+                 separator.disabled = true;
+                 separator.textContent = '--- Other Languages ---';
+                 voiceSelect.appendChild(separator);
+             }
+
+             availableVoices.forEach(voice => {
+                if (!voice.lang.startsWith('en')) {
+                    const option = document.createElement('option');
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    option.value = voice.name; // Use name as value
+                    voiceSelect.appendChild(option);
+                }
+            });
+
+            if (availableVoices.some(v => v.name === previouslySelected)) {
+                 voiceSelect.value = previouslySelected;
+            } else if (foundEnglishVoice) {
+                 // Select the first English voice if previous selection is gone
+                 voiceSelect.querySelector('option[value]').selected = true;
+            }
+
+
+            voiceSelect.disabled = false;
+        }
+
+        // --- Word Click Handler ---
+        function handleWordClick(event) {
+            if (isRecording) return;
+            const clickedWord = event.target.dataset.lookup;
+            const translation = currentDictionary[clickedWord] || "Translation not found";
+            translationBox.textContent = `${event.target.textContent.trim()} -> ${translation}`;
+             if ('speechSynthesis' in window && !speechSynthesis.speaking) {
+                 speakText(event.target.textContent.trim(), true);
+             }
+        }
+
+        // --- Speech Synthesis Functionality ---
+        function speakText(textToSpeak, isSingleWord = false) {
+             if (!textToSpeak || !textToSpeak.trim()) { console.warn("Attempted to speak empty text."); return; }
+             if (!('speechSynthesis' in window)) { speechStatus.textContent = "TTS not supported."; return; }
+             if (availableVoices.length === 0 && !isSingleWord) { speechStatus.textContent = "No speech voices loaded."; return; }
+
+            if (speechSynthesis.speaking || speechSynthesis.paused || speechSynthesis.pending) { speechSynthesis.cancel(); }
+             if (isRecording && recognition) { recognition.abort(); console.log("Recognition aborted due to TTS request."); }
+
+            currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
+            const selectedVoiceName = voiceSelect.value;
+            const selectedVoice = availableVoices.find(voice => voice.name === selectedVoiceName);
+            if (selectedVoice) { currentUtterance.voice = selectedVoice; currentUtterance.lang = selectedVoice.lang; }
+            else { currentUtterance.lang = 'en-US'; if(selectedVoiceName && availableVoices.length > 0){ console.warn(`Selected voice "${selectedVoiceName}" not found.`); } }
+            currentUtterance.rate = 0.9; currentUtterance.pitch = 1;
+
+            currentUtterance.onboundary = (event) => { /* Highlighting */
+                if (isSingleWord || event.name !== 'word') return;
+                let currentWordSpan = null; let accumulatedLength = 0;
+                for (let i = 0; i < readingTextElement.childNodes.length; i++) {
+                    const node = readingTextElement.childNodes[i]; let nodeLength = node.textContent.length;
+                    if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('word')) {
+                         if (event.charIndex >= accumulatedLength && event.charIndex < accumulatedLength + nodeLength) { currentWordSpan = node; break; }
+                    } accumulatedLength += nodeLength;
+                } wordSpans.forEach(span => span.classList.remove('highlight')); if (currentWordSpan) { currentWordSpan.classList.add('highlight'); }
+            };
+            currentUtterance.onstart = () => { speechStatus.textContent = "Reading aloud..."; playButton.disabled = true; pauseButton.disabled = false; stopButton.disabled = false; voiceSelect.disabled = true; nextBookButton.disabled = true; recordButton.disabled = true; };
+            currentUtterance.onpause = () => { speechStatus.textContent = "Paused."; playButton.disabled = false; pauseButton.disabled = true; stopButton.disabled = false; voiceSelect.disabled = true; nextBookButton.disabled = true; recordButton.disabled = true; };
+            currentUtterance.onresume = () => { speechStatus.textContent = "Resuming..."; playButton.disabled = true; pauseButton.disabled = false; stopButton.disabled = false; voiceSelect.disabled = true; nextBookButton.disabled = true; recordButton.disabled = true; };
+            currentUtterance.onend = () => { speechStatus.textContent = "Finished reading."; if (!isSingleWord) { wordSpans.forEach(span => span.classList.remove('highlight')); } playButton.disabled = false; pauseButton.disabled = true; stopButton.disabled = true; voiceSelect.disabled = false; nextBookButton.disabled = false; recordButton.disabled = !recognition; currentUtterance = null; };
+            currentUtterance.onerror = (event) => { const specificError = event.error || 'Unknown error'; speechStatus.textContent = `Speech error: ${specificError}`; console.error("TTS Error Event:", event); console.error("TTS Specific Error:", specificError); playButton.disabled = false; pauseButton.disabled = true; stopButton.disabled = true; voiceSelect.disabled = false; nextBookButton.disabled = false; recordButton.disabled = !recognition; currentUtterance = null; wordSpans.forEach(span => span.classList.remove('highlight')); };
+            speechSynthesis.speak(currentUtterance);
+        }
+
+        // --- Speech Recognition Setup ---
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            try {
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.lang = 'en-US';
+                recognition.interimResults = false;
+
+                recognition.onstart = () => {
+                    isRecording = true;
+                    recordButton.classList.add('recording');
+                    recordButtonText.textContent = 'Listening...';
+                    recognitionOutput.textContent = 'Listening... Please speak clearly.';
+                    speechStatus.textContent = 'Recording audio...';
+                    playButton.disabled = true; pauseButton.disabled = true; stopButton.disabled = true;
+                    voiceSelect.disabled = true; nextBookButton.disabled = true;
+                };
+
+                recognition.onresult = (event) => {
+                    // Get the most confident transcript from the last result
+                    const transcript = event.results[event.results.length - 1][0].transcript;
+                    recognitionOutput.textContent = `I heard: "${transcript.trim()}"`;
+                };
+
+                recognition.onerror = (event) => {
+                    // **FIX: Enhanced Error Logging and User Messages**
+                    let errorMessage = `Speech recognition error: ${event.error}`;
+                    console.error("Speech Recognition Error Event:", event); // Log the full event
+                    console.error("Specific Recognition Error Code:", event.error); // Log the specific code
+
+                    // Provide more user-friendly messages based on the error code
+                    switch (event.error) {
+                        case 'no-speech':
+                            errorMessage = "I didn't hear anything. Please ensure your microphone is working and try speaking again.";
+                            break;
+                        case 'audio-capture':
+                            errorMessage = "Audio capture failed. Please check your microphone connection and system settings.";
+                            break;
+                        case 'not-allowed':
+                            errorMessage = "Microphone access denied. Please allow microphone access in your browser's site settings and refresh the page.";
+                            break;
+                        case 'network':
+                            errorMessage = "Network error during recognition. Please check your internet connection.";
+                            break;
+                        case 'service-not-allowed':
+                             errorMessage = "Speech recognition service denied. This might be due to browser settings or limitations.";
+                             break;
+                        case 'aborted':
+                            errorMessage = "Listening stopped."; // Less alarming message for abort
+                            console.log("Speech recognition aborted.");
+                            break;
+                        default:
+                            errorMessage = `An unknown recognition error occurred: ${event.error}`;
+                    }
+                    recognitionOutput.textContent = errorMessage;
+                    // Also update status bar for critical errors like not-allowed
+                    if (event.error === 'not-allowed' || event.error === 'audio-capture') {
+                        speechStatus.textContent = errorMessage;
+                    }
+                };
+
+                recognition.onend = () => {
+                    // This event fires even after an error or abort
+                    console.log("Recognition ended.");
+                    isRecording = false;
+                    recordButton.classList.remove('recording');
+                    recordButtonText.textContent = 'Listen';
+                    // Only update status if it wasn't an error message already
+                    if (!recognitionOutput.textContent.toLowerCase().includes("error") && !recognitionOutput.textContent.toLowerCase().includes("denied")) {
+                       speechStatus.textContent = 'Finished listening.';
+                    }
+                    // Re-enable controls
+                    playButton.disabled = false; pauseButton.disabled = true; stopButton.disabled = true;
+                    voiceSelect.disabled = (availableVoices.length === 0);
+                    nextBookButton.disabled = false;
+                    recordButton.disabled = false;
+                };
+            } catch (e) {
+                 console.error("Failed to initialize SpeechRecognition:", e);
+                 recognitionOutput.textContent = "Speech recognition could not be initialized. Your browser might not support it or permissions may be blocked.";
+                 recordButton.disabled = true;
+            }
+
+        } else {
+            recordButton.disabled = true;
+            recognitionOutput.textContent = "Sorry, speech recognition is not supported in your browser.";
+            console.warn("Speech Recognition not supported.");
+        }
+
+        // --- Control Button Event Listeners ---
+        playButton.addEventListener('click', () => { if (isRecording) return; if (speechSynthesis.paused && currentUtterance) { speechSynthesis.resume(); } else if (!speechSynthesis.speaking) { speakText(readingTextElement.textContent, false); } });
+        pauseButton.addEventListener('click', () => { if (speechSynthesis.speaking) { speechSynthesis.pause(); } });
+        stopButton.addEventListener('click', () => { if (speechSynthesis.speaking || speechSynthesis.paused) { speechSynthesis.cancel(); } else { playButton.disabled = false; pauseButton.disabled = true; stopButton.disabled = true; voiceSelect.disabled = (availableVoices.length === 0); nextBookButton.disabled = false; recordButton.disabled = !recognition; speechStatus.textContent = "Reading stopped."; currentUtterance = null; wordSpans.forEach(span => span.classList.remove('highlight')); } });
+        nextBookButton.addEventListener('click', () => { currentBookIndex = (currentBookIndex + 1) % books.length; initializeText(currentBookIndex); });
+        recordButton.addEventListener('click', () => {
+             if (!recognition) { console.error("Recognition not initialized."); return; } // Safeguard
+
+             if (isRecording) {
+                 // If already recording, stop it. onend will handle state reset.
+                 recognition.stop();
+                 console.log("Stopping recognition manually.");
+             } else {
+                 // If not recording, start it. Ensure TTS is stopped first.
+                 if (speechSynthesis.speaking || speechSynthesis.paused) {
+                     speechSynthesis.cancel();
+                 }
+                 try {
+                    // Check state just before starting - belt and suspenders
+                    if (!isRecording) {
+                        recognition.start();
+                    } else {
+                        console.warn("Attempted to start recognition while already recording.");
+                    }
+                 } catch (e) {
+                     // Catch potential errors during start (e.g., if called too soon after stop)
+                     console.error("Error starting recognition:", e);
+                     recognitionOutput.textContent = `Could not start listening: ${e.message}. Please try again shortly.`;
+                      // Ensure UI is reset if start fails immediately
+                     isRecording = false;
+                     recordButton.classList.remove('recording');
+                     recordButtonText.textContent = 'Listen';
+                     playButton.disabled = false; pauseButton.disabled = true; stopButton.disabled = true;
+                     voiceSelect.disabled = (availableVoices.length === 0); nextBookButton.disabled = false; recordButton.disabled = false;
+                 }
+             }
+        });
+
+
+        // --- Initial Setup ---
+        function runInitialSetup() {
+            let initialStatus = "";
+            if (!('speechSynthesis' in window)) {
+                initialStatus = "Text-to-speech is not supported.";
+                playButton.disabled = true; pauseButton.disabled = true; stopButton.disabled = true; voiceSelect.disabled = true;
+            } else {
+                 populateVoiceList();
+                 if (speechSynthesis.onvoiceschanged !== undefined) {
+                     speechSynthesis.onvoiceschanged = populateVoiceList;
+                 }
+            }
+
+            if (!SpeechRecognition) {
+                initialStatus += (initialStatus ? " " : "") + "Speech recognition not supported.";
+                recordButton.disabled = true;
+            }
+
+            initializeText(currentBookIndex); // Load text content
+
+            // Set status after initialization and checks
+            if(initialStatus) {
+                speechStatus.textContent = initialStatus;
+            } else if (availableVoices.length === 0 && !('onvoiceschanged' in speechSynthesis)) {
+                 speechStatus.textContent = "Loading voices or none available.";
+            } else if (availableVoices.length > 0 && SpeechRecognition) {
+                 speechStatus.textContent = "Select voice & Play, or press Listen.";
+            } else {
+                 speechStatus.textContent = "Ready."; // Fallback status
+            }
+        }
+
+        // Run setup after the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', runInitialSetup);
+
+
+    </script>
+
+</body>
+</html>
