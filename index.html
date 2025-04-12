@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Jonathans EFL Reading & Pronunciation Tool</title>
+    <title>Jonathans Reading Practice</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,7 +103,7 @@
 <body class="p-6 md:p-10">
 
     <div class="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">EFL Reading Practice</h1>
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Jonathans Reading Practice</h1>
 
         <div class="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4 mb-6">
             <div class="flex space-x-4">
@@ -171,9 +171,59 @@
 
         // --- Book Data ---
         const books = [
-             { title: "Language Learning", text: "Learning a new language can be challenging, but also very rewarding. Regular practice is important for improvement. This tool helps you practice reading and pronunciation. Click any word to see its translation.", dictionary: { "learning": "Lernen", "a": "ein/eine", "new": "neu", "language": "Sprache", "can": "kann", "be": "sein", "challenging": "herausfordernd", "but": "aber", "also": "auch", "very": "sehr", "rewarding": "lohnend", "regular": "regelmäßig", "practice": "Übung", "is": "ist", "important": "wichtig", "for": "für", "improvement": "Verbesserung", "this": "dieses", "tool": "Werkzeug", "helps": "hilft", "you": "dir/Ihnen", "reading": "Lesen", "and": "und", "pronunciation": "Aussprache", "click": "klicke/klicken Sie", "any": "jedes", "word": "Wort", "to": "um/zu", "see": "sehen", "its": "seine/ihre", "translation": "Übersetzung" } },
-             { title: "The Friendly Animals", text: "The quick brown fox jumps over the lazy dog. A small cat sat on the mat. Birds sing in the tall green trees.", dictionary: { "the": "der/die/das", "quick": "schnell", "brown": "braun", "fox": "Fuchs", "jumps": "springt", "over": "über", "lazy": "faul", "dog": "Hund", "a": "ein/eine", "small": "klein", "cat": "Katze", "sat": "saß", "on": "auf", "mat": "Matte", "birds": "Vögel", "sing": "singen", "in": "in", "tall": "hoch", "green": "grün", "trees": "Bäume" } },
-             { title: "Simple Sentences", text: "I like apples. She reads a book. He runs fast. We play games. They eat lunch.", dictionary: { "i": "ich", "like": "mag", "apples": "Äpfel", "she": "sie", "reads": "liest", "a": "ein", "book": "Buch", "he": "er", "runs": "rennt", "fast": "schnell", "we": "wir", "play": "spielen", "games": "Spiele", "they": "sie", "eat": "essen", "lunch": "Mittagessen" } }
+             // *** NEW BOOK ADDED AT THE BEGINNING ***
+             {
+                title: "Salome and Valery’s Wild Friendship Adventure",
+                text: "Salome and Valery were best friends. Salome was very adventurous, and Valery was a great listener. One day, Salome had a crazy idea. “Let’s go on a dangerous trip to find the lost cat of Frau Müller!” she said. Valery looked a little afraid. “Are you sure?” she asked. “Of course! It will be a safe adventure. I have snacks!” said Salome, smiling a funny smile. Valery started to smile too. “Okay, but only if we take my dog Schnitzel. He’s very helpful.” They packed a bag: food, water, a flashlight, and Schnitzel’s squeaky toy. On the way, Salome was singing and jumping. “You are so crazy,” said Valery, laughing. “But also brave.” As they walked into the dark forest, Valery whispered, “I think I heard something…” “It’s just the wind,” said Salome. “Perhaps.” Suddenly, Schnitzel barked and ran into a bush. Out came… Frau Müller’s cat! “We did it!” shouted Valery. “You’re optimistic, and I’m always serious, but we make a great team.” They returned home. Frau Müller gave them chocolate. “You are both so generous, friendly, and cooperative,” she said. Salome looked tired but happy. “You know what?” she said. “You’re my main character in the movie of life.” Valery smiled. “And you’re mine.” “Let’s think of a new adventure tomorrow.” “Perhaps,” said Valery, “but first—I need a nap. You are way too energetic, and I feel totally lazy now.” They both laughed, and Schnitzel snored loudly. The End",
+                dictionary: {
+                    "salome": "Salome", "and": "und", "valery": "Valery", "were": "waren", "best": "beste",
+                    "friends": "Freunde", "was": "war", "very": "sehr", "adventurous": "abenteuerlustig",
+                    "a": "ein/eine", "great": "großartig", "listener": "Zuhörerin", "one": "eines", "day": "Tages",
+                    "had": "hatte", "crazy": "verrückt", "idea": "Idee", "let’s": "lass uns", "go": "gehen",
+                    "on": "auf", "dangerous": "gefährlich", "trip": "Ausflug", "to": "um zu", "find": "finden",
+                    "the": "der/die/das", "lost": "verloren", "cat": "Katze", "of": "von", "frau": "Frau",
+                    "müller": "Müller", "she": "sie", "said": "sagte", "looked": "schaute", "little": "bisschen",
+                    "afraid": "ängstlich", "are": "bist", "you": "du", "sure": "sicher", "asked": "fragte",
+                    "of": "von", "course": "natürlich", "it": "es", "will": "wird", "be": "sein", "safe": "sicher",
+                    "adventure": "Abenteuer", "i": "ich", "have": "habe", "snacks": "Snacks", "smiling": "lächelnd",
+                    "funny": "komisch", "smile": "Lächeln", "started": "fing an", "too": "auch", "okay": "okay",
+                    "but": "aber", "only": "nur", "if": "wenn", "we": "wir", "take": "mitnehmen", "my": "mein",
+                    "dog": "Hund", "schnitzel": "Schnitzel", "he’s": "er ist", "helpful": "hilfreich",
+                    "they": "sie", "packed": "packten", "bag": "Tasche", "food": "Essen", "water": "Wasser",
+                    "flashlight": "Taschenlampe", "squeaky": "quietschend", "toy": "Spielzeug", "way": "Weg",
+                    "singing": "singend", "jumping": "springend", "so": "so", "laughing": "lachend",
+                    "also": "auch", "brave": "mutig", "as": "als", "walked": "gingen", "into": "in den",
+                    "dark": "dunkel", "forest": "Wald", "whispered": "flüsterte", "think": "denke", "heard": "hörte",
+                    "something": "etwas", "it’s": "es ist", "just": "nur", "wind": "Wind", "perhaps": "vielleicht",
+                    "suddenly": "plötzlich", "barked": "bellte", "ran": "rannte", "bush": "Busch", "out": "heraus",
+                    "came": "kam", "did": "haben getan", "shouted": "rief", "you’re": "du bist", "optimistic": "optimistisch",
+                    "always": "immer", "serious": "ernst", "make": "bilden", "team": "Team", "returned": "kehrten zurück",
+                    "home": "nach Hause", "gave": "gab", "them": "ihnen", "chocolate": "Schokolade", "both": "beide",
+                    "generous": "großzügig", "friendly": "freundlich", "cooperative": "kooperativ", "tired": "müde",
+                    "happy": "glücklich", "know": "weißt", "what": "was", "main": "Haupt-", "character": "Figur",
+                    "in": "im", "movie": "Film", "life": "Leben", "mine": "meiner", "let's": "lass uns",
+                    "new": "neu", "tomorrow": "morgen", "first": "zuerst", "need": "brauche", "nap": "Nickerchen",
+                    "way": "viel", "too": "zu", "energetic": "energiegeladen", "feel": "fühle", "totally": "total",
+                    "lazy": "faul", "now": "jetzt", "laughed": "lachten", "snored": "schnarchte", "loudly": "laut",
+                    "end": "Ende"
+                 }
+             },
+             // Previous books follow
+             {
+                title: "Language Learning",
+                text: "Learning a new language can be challenging, but also very rewarding. Regular practice is important for improvement. This tool helps you practice reading and pronunciation. Click any word to see its translation.",
+                dictionary: { "learning": "Lernen", "a": "ein/eine", "new": "neu", "language": "Sprache", "can": "kann", "be": "sein", "challenging": "herausfordernd", "but": "aber", "also": "auch", "very": "sehr", "rewarding": "lohnend", "regular": "regelmäßig", "practice": "Übung", "is": "ist", "important": "wichtig", "for": "für", "improvement": "Verbesserung", "this": "dieses", "tool": "Werkzeug", "helps": "hilft", "you": "dir/Ihnen", "reading": "Lesen", "and": "und", "pronunciation": "Aussprache", "click": "klicke/klicken Sie", "any": "jedes", "word": "Wort", "to": "um/zu", "see": "sehen", "its": "seine/ihre", "translation": "Übersetzung" }
+             },
+             {
+                title: "The Friendly Animals",
+                text: "The quick brown fox jumps over the lazy dog. A small cat sat on the mat. Birds sing in the tall green trees.",
+                dictionary: { "the": "der/die/das", "quick": "schnell", "brown": "braun", "fox": "Fuchs", "jumps": "springt", "over": "über", "lazy": "faul", "dog": "Hund", "a": "ein/eine", "small": "klein", "cat": "Katze", "sat": "saß", "on": "auf", "mat": "Matte", "birds": "Vögel", "sing": "singen", "in": "in", "tall": "hoch", "green": "grün", "trees": "Bäume" }
+             },
+             {
+                title: "Simple Sentences",
+                text: "I like apples. She reads a book. He runs fast. We play games. They eat lunch.",
+                dictionary: { "i": "ich", "like": "mag", "apples": "Äpfel", "she": "sie", "reads": "liest", "a": "ein", "book": "Buch", "he": "er", "runs": "rennt", "fast": "schnell", "we": "wir", "play": "spielen", "games": "Spiele", "they": "sie", "eat": "essen", "lunch": "Mittagessen" }
+             }
         ];
 
         let currentBookIndex = 0;
@@ -190,7 +240,7 @@
                 speechSynthesis.cancel();
             }
              if (isRecording && recognition) {
-                 recognition.abort(); // Use abort() for immediate stop if needed
+                 recognition.abort();
                  console.log("Recognition aborted due to text change.");
              }
 
@@ -202,29 +252,34 @@
             translationBox.textContent = 'Click on a word in the text above to see its German translation here.';
             recognitionOutput.textContent = 'Click the \'Listen\' button and read the text aloud. Your transcribed speech will appear here.';
 
-            const wordsAndDelimiters = book.text.split(/([,.\s])/).filter(Boolean);
+            // Improved splitting to handle punctuation attached to words better
+            const wordsAndDelimiters = book.text.split(/([,\.\s!"?”…—])/g).filter(Boolean);
+
             wordsAndDelimiters.forEach(item => {
-                if (item.match(/^[,\.\s]$/)) {
+                // Check if item is purely punctuation/space or a word
+                if (item.match(/^[,\.\s!"?”…—]+$/)) {
                     readingTextElement.appendChild(document.createTextNode(item));
-                } else if (item) {
+                } else if (item.trim()) { // Ensure it's not just whitespace captured by splitting
                     const span = document.createElement('span');
                     span.textContent = item;
                     span.className = 'word';
-                    span.dataset.lookup = item.toLowerCase().replace(/[.,]$/, '');
+                    // Lookup key: lowercase, remove leading/trailing punctuation common in dialogue
+                    span.dataset.lookup = item.toLowerCase().replace(/^[“"‘']+|[,\.”"’'?!…—]+$/g, '');
                     span.addEventListener('click', handleWordClick);
                     readingTextElement.appendChild(span);
                     wordSpans.push(span);
+                } else if (item.match(/\s+/)) { // Handle spaces if filter(Boolean) didn't catch them
+                     readingTextElement.appendChild(document.createTextNode(item));
                 }
             });
 
-             // Reset button states reliably
              playButton.disabled = false;
              pauseButton.disabled = true;
              stopButton.disabled = true;
-             recordButton.disabled = !recognition; // Disable if recognition not supported
+             recordButton.disabled = !recognition;
              voiceSelect.disabled = (availableVoices.length === 0);
              nextBookButton.disabled = false;
-             isRecording = false; // Ensure recording state is reset
+             isRecording = false;
              recordButton.classList.remove('recording');
              recordButtonText.textContent = 'Listen';
              speechStatus.textContent = "Select a voice and press play, or press Listen to record.";
@@ -241,14 +296,14 @@
                 voiceSelect.disabled = true;
                 return;
             }
-            availableVoices.sort((a, b) => a.name.localeCompare(b.name)); // Sort voices alphabetically
+            availableVoices.sort((a, b) => a.name.localeCompare(b.name));
 
             let foundEnglishVoice = false;
             availableVoices.forEach(voice => {
                 if (voice.lang.startsWith('en')) {
                     const option = document.createElement('option');
                     option.textContent = `${voice.name} (${voice.lang})`;
-                    option.value = voice.name; // Use name as value
+                    option.value = voice.name;
                     voiceSelect.appendChild(option);
                     foundEnglishVoice = true;
                 }
@@ -265,7 +320,7 @@
                 if (!voice.lang.startsWith('en')) {
                     const option = document.createElement('option');
                     option.textContent = `${voice.name} (${voice.lang})`;
-                    option.value = voice.name; // Use name as value
+                    option.value = voice.name;
                     voiceSelect.appendChild(option);
                 }
             });
@@ -273,10 +328,8 @@
             if (availableVoices.some(v => v.name === previouslySelected)) {
                  voiceSelect.value = previouslySelected;
             } else if (foundEnglishVoice) {
-                 // Select the first English voice if previous selection is gone
                  voiceSelect.querySelector('option[value]').selected = true;
             }
-
 
             voiceSelect.disabled = false;
         }
@@ -286,9 +339,11 @@
             if (isRecording) return;
             const clickedWord = event.target.dataset.lookup;
             const translation = currentDictionary[clickedWord] || "Translation not found";
+            // Display original clicked text (with punctuation) + translation
             translationBox.textContent = `${event.target.textContent.trim()} -> ${translation}`;
              if ('speechSynthesis' in window && !speechSynthesis.speaking) {
-                 speakText(event.target.textContent.trim(), true);
+                 // Speak only the word part, without surrounding punctuation for better TTS
+                 speakText(clickedWord, true);
              }
         }
 
@@ -311,12 +366,32 @@
             currentUtterance.onboundary = (event) => { /* Highlighting */
                 if (isSingleWord || event.name !== 'word') return;
                 let currentWordSpan = null; let accumulatedLength = 0;
-                for (let i = 0; i < readingTextElement.childNodes.length; i++) {
-                    const node = readingTextElement.childNodes[i]; let nodeLength = node.textContent.length;
-                    if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('word')) {
-                         if (event.charIndex >= accumulatedLength && event.charIndex < accumulatedLength + nodeLength) { currentWordSpan = node; break; }
-                    } accumulatedLength += nodeLength;
-                } wordSpans.forEach(span => span.classList.remove('highlight')); if (currentWordSpan) { currentWordSpan.classList.add('highlight'); }
+                // Use charIndex which is relative to the utterance's text content
+                const utteranceText = currentUtterance.text;
+                let currentSearchIndex = 0;
+
+                for (let i = 0; i < wordSpans.length; i++) {
+                    const span = wordSpans[i];
+                    const spanText = span.textContent;
+                    // Find the start index of this span's text within the utterance
+                    // This assumes the order is preserved and handles potential spacing differences
+                    const spanStartIndexInUtterance = utteranceText.indexOf(spanText, currentSearchIndex);
+
+                    if (spanStartIndexInUtterance !== -1) {
+                        // Check if the event's character index falls within this span's range in the utterance
+                         if (event.charIndex >= spanStartIndexInUtterance && event.charIndex < spanStartIndexInUtterance + spanText.length) {
+                             currentWordSpan = span;
+                             break;
+                         }
+                         currentSearchIndex = spanStartIndexInUtterance + spanText.length; // Update search index
+                    } else {
+                         // This might happen if punctuation/spacing differs greatly, log it
+                         // console.warn(`Span text "${spanText}" not found in utterance starting from index ${currentSearchIndex}`);
+                    }
+                }
+                 wordSpans.forEach(s => s.classList.remove('highlight'));
+                 if (currentWordSpan) { currentWordSpan.classList.add('highlight'); }
+                 else { /* console.log("Highlight span not found for charIndex:", event.charIndex); */ } // Debug if needed
             };
             currentUtterance.onstart = () => { speechStatus.textContent = "Reading aloud..."; playButton.disabled = true; pauseButton.disabled = false; stopButton.disabled = false; voiceSelect.disabled = true; nextBookButton.disabled = true; recordButton.disabled = true; };
             currentUtterance.onpause = () => { speechStatus.textContent = "Paused."; playButton.disabled = false; pauseButton.disabled = true; stopButton.disabled = false; voiceSelect.disabled = true; nextBookButton.disabled = true; recordButton.disabled = true; };
@@ -346,59 +421,33 @@
                 };
 
                 recognition.onresult = (event) => {
-                    // Get the most confident transcript from the last result
                     const transcript = event.results[event.results.length - 1][0].transcript;
                     recognitionOutput.textContent = `I heard: "${transcript.trim()}"`;
                 };
 
                 recognition.onerror = (event) => {
-                    // **FIX: Enhanced Error Logging and User Messages**
                     let errorMessage = `Speech recognition error: ${event.error}`;
-                    console.error("Speech Recognition Error Event:", event); // Log the full event
-                    console.error("Specific Recognition Error Code:", event.error); // Log the specific code
-
-                    // Provide more user-friendly messages based on the error code
+                    console.error("Speech Recognition Error Event:", event);
+                    console.error("Specific Recognition Error Code:", event.error);
                     switch (event.error) {
-                        case 'no-speech':
-                            errorMessage = "I didn't hear anything. Please ensure your microphone is working and try speaking again.";
-                            break;
-                        case 'audio-capture':
-                            errorMessage = "Audio capture failed. Please check your microphone connection and system settings.";
-                            break;
-                        case 'not-allowed':
-                            errorMessage = "Microphone access denied. Please allow microphone access in your browser's site settings and refresh the page.";
-                            break;
-                        case 'network':
-                            errorMessage = "Network error during recognition. Please check your internet connection.";
-                            break;
-                        case 'service-not-allowed':
-                             errorMessage = "Speech recognition service denied. This might be due to browser settings or limitations.";
-                             break;
-                        case 'aborted':
-                            errorMessage = "Listening stopped."; // Less alarming message for abort
-                            console.log("Speech recognition aborted.");
-                            break;
-                        default:
-                            errorMessage = `An unknown recognition error occurred: ${event.error}`;
+                        case 'no-speech': errorMessage = "I didn't hear anything. Please ensure your microphone is working and try speaking again."; break;
+                        case 'audio-capture': errorMessage = "Audio capture failed. Please check your microphone connection and system settings."; break;
+                        case 'not-allowed': errorMessage = "Microphone access denied. Please allow microphone access in your browser's site settings and refresh the page."; break;
+                        case 'network': errorMessage = "Network error during recognition. Please check your internet connection."; break;
+                        case 'service-not-allowed': errorMessage = "Speech recognition service denied. This might be due to browser settings or limitations."; break;
+                        case 'aborted': errorMessage = "Listening stopped."; console.log("Speech recognition aborted."); break;
+                        default: errorMessage = `An unknown recognition error occurred: ${event.error}`;
                     }
                     recognitionOutput.textContent = errorMessage;
-                    // Also update status bar for critical errors like not-allowed
-                    if (event.error === 'not-allowed' || event.error === 'audio-capture') {
-                        speechStatus.textContent = errorMessage;
-                    }
+                    if (event.error === 'not-allowed' || event.error === 'audio-capture') { speechStatus.textContent = errorMessage; }
                 };
 
                 recognition.onend = () => {
-                    // This event fires even after an error or abort
                     console.log("Recognition ended.");
                     isRecording = false;
                     recordButton.classList.remove('recording');
                     recordButtonText.textContent = 'Listen';
-                    // Only update status if it wasn't an error message already
-                    if (!recognitionOutput.textContent.toLowerCase().includes("error") && !recognitionOutput.textContent.toLowerCase().includes("denied")) {
-                       speechStatus.textContent = 'Finished listening.';
-                    }
-                    // Re-enable controls
+                    if (!recognitionOutput.textContent.toLowerCase().includes("error") && !recognitionOutput.textContent.toLowerCase().includes("denied")) { speechStatus.textContent = 'Finished listening.'; }
                     playButton.disabled = false; pauseButton.disabled = true; stopButton.disabled = true;
                     voiceSelect.disabled = (availableVoices.length === 0);
                     nextBookButton.disabled = false;
@@ -409,7 +458,6 @@
                  recognitionOutput.textContent = "Speech recognition could not be initialized. Your browser might not support it or permissions may be blocked.";
                  recordButton.disabled = true;
             }
-
         } else {
             recordButton.disabled = true;
             recognitionOutput.textContent = "Sorry, speech recognition is not supported in your browser.";
@@ -422,38 +470,24 @@
         stopButton.addEventListener('click', () => { if (speechSynthesis.speaking || speechSynthesis.paused) { speechSynthesis.cancel(); } else { playButton.disabled = false; pauseButton.disabled = true; stopButton.disabled = true; voiceSelect.disabled = (availableVoices.length === 0); nextBookButton.disabled = false; recordButton.disabled = !recognition; speechStatus.textContent = "Reading stopped."; currentUtterance = null; wordSpans.forEach(span => span.classList.remove('highlight')); } });
         nextBookButton.addEventListener('click', () => { currentBookIndex = (currentBookIndex + 1) % books.length; initializeText(currentBookIndex); });
         recordButton.addEventListener('click', () => {
-             if (!recognition) { console.error("Recognition not initialized."); return; } // Safeguard
-
+             if (!recognition) { console.error("Recognition not initialized."); return; }
              if (isRecording) {
-                 // If already recording, stop it. onend will handle state reset.
-                 recognition.stop();
+                 recognition.stop(); // Use stop() instead of abort() for normal stopping
                  console.log("Stopping recognition manually.");
              } else {
-                 // If not recording, start it. Ensure TTS is stopped first.
-                 if (speechSynthesis.speaking || speechSynthesis.paused) {
-                     speechSynthesis.cancel();
-                 }
+                 if (speechSynthesis.speaking || speechSynthesis.paused) { speechSynthesis.cancel(); }
                  try {
-                    // Check state just before starting - belt and suspenders
-                    if (!isRecording) {
-                        recognition.start();
-                    } else {
-                        console.warn("Attempted to start recognition while already recording.");
-                    }
+                    if (!isRecording) { recognition.start(); }
+                    else { console.warn("Attempted to start recognition while already recording."); }
                  } catch (e) {
-                     // Catch potential errors during start (e.g., if called too soon after stop)
                      console.error("Error starting recognition:", e);
                      recognitionOutput.textContent = `Could not start listening: ${e.message}. Please try again shortly.`;
-                      // Ensure UI is reset if start fails immediately
-                     isRecording = false;
-                     recordButton.classList.remove('recording');
-                     recordButtonText.textContent = 'Listen';
+                     isRecording = false; recordButton.classList.remove('recording'); recordButtonText.textContent = 'Listen';
                      playButton.disabled = false; pauseButton.disabled = true; stopButton.disabled = true;
                      voiceSelect.disabled = (availableVoices.length === 0); nextBookButton.disabled = false; recordButton.disabled = false;
                  }
              }
         });
-
 
         // --- Initial Setup ---
         function runInitialSetup() {
@@ -467,29 +501,18 @@
                      speechSynthesis.onvoiceschanged = populateVoiceList;
                  }
             }
-
             if (!SpeechRecognition) {
                 initialStatus += (initialStatus ? " " : "") + "Speech recognition not supported.";
                 recordButton.disabled = true;
             }
-
-            initializeText(currentBookIndex); // Load text content
-
-            // Set status after initialization and checks
-            if(initialStatus) {
-                speechStatus.textContent = initialStatus;
-            } else if (availableVoices.length === 0 && !('onvoiceschanged' in speechSynthesis)) {
-                 speechStatus.textContent = "Loading voices or none available.";
-            } else if (availableVoices.length > 0 && SpeechRecognition) {
-                 speechStatus.textContent = "Select voice & Play, or press Listen.";
-            } else {
-                 speechStatus.textContent = "Ready."; // Fallback status
-            }
+            initializeText(currentBookIndex); // Load text content *after* feature checks
+            if(initialStatus) { speechStatus.textContent = initialStatus; }
+            else if (availableVoices.length === 0 && !('onvoiceschanged' in speechSynthesis)) { speechStatus.textContent = "Loading voices or none available."; }
+            else if (availableVoices.length > 0 && SpeechRecognition) { speechStatus.textContent = "Select voice & Play, or press Listen."; }
+            else { speechStatus.textContent = "Ready."; }
         }
-
-        // Run setup after the DOM is fully loaded
+        // Use DOMContentLoaded to ensure elements exist before running setup
         document.addEventListener('DOMContentLoaded', runInitialSetup);
-
 
     </script>
 
